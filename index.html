@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
     <title>React Table Component</title>
-  </head>
-  <body>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            border: 0;
+        }
 
-    <div id="table"></div>
+        td, th {
+            padding: .3em;
+            border: 1px solid #ccc;
+        }
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="./build/react-with-addons.js"></script>
-    <script src="./build/app.js"></script>
-  </body>
+        thead th {
+            background-color: #ddd;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+
+<div id="table"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="./build/react-with-addons.js"></script>
+<script src="./build/app.js"></script>
+
+</body>
 </html>
