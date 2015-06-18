@@ -5,21 +5,64 @@
     <title>React Table Component</title>
     <style type="text/css">
         table {
+            max-width: 100%;
+            background-color: transparent;
+            border: 1px solid #ddd;
+            margin: 0 auto;
             border-collapse: collapse;
-            border: 0;
+        }
+        caption {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        table > thead > tr > th,
+        table > thead > tr > td {
+            background: #f8f0f0;
+            cursor: pointer;
+        }
+        table > thead > tr > th,
+        table > thead > tr > td,
+        table > tbody > tr > td,
+        table > tfoot > tr > td {
+            padding: 1em;
+            vertical-align: top;
+            border: 1px solid #ddd;
+        }
+        table > thead > tr > th,
+        table > thead > tr > td {
+            vertical-align: bottom;
+            border-bottom: 2px solid #ddd;
+            text-align: left;
+            white-space: nowrap;
+            text-transform: capitalize;
         }
 
-        td, th {
-            padding: .3em;
-            border: 1px solid #ccc;
+        table > thead > tr > th:focus,
+        table > thead > tr > th:hover,
+        table > thead > tr > td:focus,
+        table > thead > tr > td:hover{
+            color: #ddd;
+            background-color: #666;
+            outline: none;
         }
 
-        thead th {
-            background-color: #ddd;
-        }
 
-        tbody tr:nth-child(odd) {
-            background-color: #eee;
+        table > thead > tr > th > span.icon{
+            margin-left: .3em;
+        }
+        table > thead > tr > th.asc > span.icon:after,
+        table > thead > tr > td.asc > span.icon:after {
+            content: "▲";
+        }
+        table > thead > tr > th.desc > span.icon:after,
+        table > thead > tr > td.desc > span.icon:after {
+            content: "▼";
+        }
+        span.offscreen {
+            position: absolute !important;
+            clip: rect(1px 1px 1px 1px);
+            /* IE6, IE7 */
+            clip: rect(1px, 1px, 1px, 1px);
         }
     </style>
 </head>
