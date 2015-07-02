@@ -3,7 +3,7 @@ var TableComponent = React.createClass({
     getInitialState: function () {
         return {
             data: [],
-            sortDir: ''
+            sortDir: 'asc' // toggle on first click make inital sort asc
         };
     },
 
@@ -30,7 +30,7 @@ var TableComponent = React.createClass({
         return array.sort(function (a, b) {
             var x = a[column];
             var y = b[column];
-            if (sortDir === 'asc') {
+            if (sortDir === 'dsc') {
                 return ((x > y) ? -1 : ((x < y) ? 1 : 0));
             } else {
                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
