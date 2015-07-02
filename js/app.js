@@ -73,7 +73,7 @@ var TableComponent = React.createClass({
 var TableHeader = React.createClass({
 
     propTypes: {
-        sortDir: React.PropTypes.oneOf(['acs', 'descending']),
+        sortDir: React.PropTypes.oneOf(['ascending', 'descending']),
         onSort: React.PropTypes.func
     },
 
