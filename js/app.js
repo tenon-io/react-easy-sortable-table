@@ -40,13 +40,13 @@ var TableComponent = React.createClass({
     },
 
     sort: function (column) {
-        var sortDir = this.state.sortDir;
         var data = this.state.data;
-        var sortedData = this.sortByColumn(data, column, sortDir[column]);
-        this.setState({data: sortedData});
-        sortDir[column] = (sortDir[column] === 'asc' ? 'dsc' : 'asc');
-        this.setState({sortDir: sortDir});
-        this.props.caption += ' Sorted By ' + ' ' + column + ' ' + sortDir;
+        var sortedData = this.sortByColumn(data, column, this.state.sortDir);
+        this.setState({
+            data: sortedData,
+            sortDir: (this.state.sortDir === 'asc' ? 'dsc' : 'asc')
+        });
+        this.props.caption = ' Sorted By ' + ' ' + column + ' ' + this.state.sortDir;
     },
 
     render: function () {
@@ -58,7 +58,7 @@ var TableComponent = React.createClass({
                 <table>
                     <TableCaption caption={this.props.caption} onSort={this.sort} />
                     <thead>
-                        <TableHeader onSort={this.sort} columns={columns} />
+                        <TableHeader onSort={this.sort} sortDir={this.state.sortDir} columns={columns} />
                     </thead>
                     <TableBody data={data} columns={columns} />
                 </table>
@@ -73,6 +73,12 @@ var TableComponent = React.createClass({
 
 
 var TableHeader = React.createClass({
+
+    propTypes: {
+        sortDir: React.PropTypes.oneOf(['acs', 'dsc']),
+        onSort: React.PropTypes.func
+    },
+
     sort: function (column) {
         return function (event) {
 
@@ -93,7 +99,7 @@ var TableHeader = React.createClass({
 
             var sortDir = this.props.sortDir;
             console.log(sortDir);
-            console.log(column);
+            // console.log(column);
             this.props.onSort(column, sortDir);
         }.bind(this);
     },
