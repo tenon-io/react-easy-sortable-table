@@ -3,7 +3,7 @@ var TableComponent = React.createClass({
     getInitialState: function () {
         return {
             data: [],
-            sortDir: {}
+            sortDir: 'ascending'
         };
     },
 
@@ -11,7 +11,6 @@ var TableComponent = React.createClass({
         $.getJSON(this.props.src, {
             format: "json"
         }).done(function (data) {
-
             if (this.isMounted()) {
                 this.setState({
                     data: data
@@ -31,7 +30,7 @@ var TableComponent = React.createClass({
         return array.sort(function (a, b) {
             var x = a[column];
             var y = b[column];
-            if (sortDir === 'asc') {
+            if (sortDir === 'descending') {
                 return ((x > y) ? -1 : ((x < y) ? 1 : 0));
             } else {
                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
@@ -40,13 +39,12 @@ var TableComponent = React.createClass({
     },
 
     sort: function (column) {
-        var data = this.state.data;
-        var sortedData = this.sortByColumn(data, column, this.state.sortDir);
+        var sortedData = this.sortByColumn(this.state.data, column, this.state.sortDir);
         this.setState({
             data: sortedData,
-            sortDir: (this.state.sortDir === 'asc' ? 'dsc' : 'asc')
+            sortDir: (this.state.sortDir === 'ascending' ? 'descending' : 'ascending')
         });
-        this.props.caption = ' Sorted By ' + ' ' + column + ' ' + this.state.sortDir;
+        this.props.description = ' sorted by ' + column + ' ' + this.state.sortDir;
     },
 
     render: function () {
@@ -56,7 +54,7 @@ var TableComponent = React.createClass({
         if (this.isMounted()) {
             return (
                 <table>
-                    <TableCaption caption={this.props.caption} onSort={this.sort} />
+                    <TableCaption caption={this.props.caption} description={this.props.description || ''} />
                     <thead>
                         <TableHeader onSort={this.sort} sortDir={this.state.sortDir} columns={columns} />
                     </thead>
@@ -75,7 +73,7 @@ var TableComponent = React.createClass({
 var TableHeader = React.createClass({
 
     propTypes: {
-        sortDir: React.PropTypes.oneOf(['acs', 'dsc']),
+        sortDir: React.PropTypes.oneOf(['ascending', 'descending']),
         onSort: React.PropTypes.func
     },
 
@@ -96,11 +94,7 @@ var TableHeader = React.createClass({
                     event.preventDefault();
                 }
             }
-
-            var sortDir = this.props.sortDir;
-            console.log(sortDir);
-            // console.log(column);
-            this.props.onSort(column, sortDir);
+            this.props.onSort(column);
         }.bind(this);
     },
 
@@ -120,11 +114,14 @@ var TableHeader = React.createClass({
 });
 
 var TableCaption = React.createClass({
+    propTypes: {
+        caption: React.PropTypes.string,
+        description: React.PropTypes.string
+    },
 
     render: function () {
-
         return (
-            <caption role="status" aria-live="assertive" aria-relevant="all" aria-atomic="true">{this.props.caption}</caption>
+            <caption role="status" aria-live="assertive" aria-relevant="all" aria-atomic="true">{this.props.caption + " " + this.props.description}</caption>
         )
     }
 });
