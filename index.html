@@ -15,6 +15,7 @@
             font-weight: bold;
             font-size: 1.2em;
         }
+
         table > thead > tr > th,
         table > thead > tr > td {
             background: #f8f0f0;
@@ -58,12 +59,21 @@
         table > thead > tr > td.desc > span.icon:after {
             content: "▼";
         }
+
+
+        table tbody{
+            height: 500px;
+            overflow: hidden;
+
+        }
+
         span.offscreen {
             position: absolute !important;
             clip: rect(1px 1px 1px 1px);
             /* IE6, IE7 */
             clip: rect(1px, 1px, 1px, 1px);
         }
+
     </style>
 </head>
 <body>
