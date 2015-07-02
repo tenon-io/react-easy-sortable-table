@@ -81,11 +81,11 @@ var TableHeader = React.createClass({displayName: "TableHeader",
         return function (event) {
 
             var code = event.charCode || event.keyCode,
-                type = event.type;
+                type = event.type,
+                ENTER = 13,
+                SPACE = 32;
 
-            if (type === 'keydown') {
-                var ENTER = 13,
-                    SPACE = 32;
+            if ((type === 'click') || (code === 13 || code === 32)) {
 
                 if ((code !== ENTER) && (code !== SPACE)) {
                     event.stopPropagation();
@@ -93,8 +93,10 @@ var TableHeader = React.createClass({displayName: "TableHeader",
                 else if (code === SPACE) {
                     event.preventDefault();
                 }
+
+                this.props.onSort(column);
             }
-            this.props.onSort(column);
+
         }.bind(this);
     },
 
@@ -150,7 +152,6 @@ var TableRow = React.createClass({displayName: "TableRow",
         var td = function (item) {
 
             return columns.map(function (c, i) {
-
 
 
                 return React.createElement("td", {key: i}, item[c]);
