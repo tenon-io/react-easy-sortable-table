@@ -3,7 +3,7 @@ var TableComponent = React.createClass({displayName: "TableComponent",
     getInitialState: function () {
         return {
             data: [],
-            sortDir: {}
+            sortDir: ''
         };
     },
 
@@ -11,7 +11,6 @@ var TableComponent = React.createClass({displayName: "TableComponent",
         $.getJSON(this.props.src, {
             format: "json"
         }).done(function (data) {
-
             if (this.isMounted()) {
                 this.setState({
                     data: data
@@ -40,8 +39,7 @@ var TableComponent = React.createClass({displayName: "TableComponent",
     },
 
     sort: function (column) {
-        var data = this.state.data;
-        var sortedData = this.sortByColumn(data, column, this.state.sortDir);
+        var sortedData = this.sortByColumn(this.state.data, column, this.state.sortDir);
         this.setState({
             data: sortedData,
             sortDir: (this.state.sortDir === 'asc' ? 'dsc' : 'asc')
@@ -56,7 +54,7 @@ var TableComponent = React.createClass({displayName: "TableComponent",
         if (this.isMounted()) {
             return (
                 React.createElement("table", null, 
-                    React.createElement(TableCaption, {caption: this.props.caption, onSort: this.sort}), 
+                    React.createElement(TableCaption, {caption: this.props.caption}), 
                     React.createElement("thead", null, 
                         React.createElement(TableHeader, {onSort: this.sort, sortDir: this.state.sortDir, columns: columns})
                     ), 
@@ -96,11 +94,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
                     event.preventDefault();
                 }
             }
-
-            var sortDir = this.props.sortDir;
-            console.log(sortDir);
-            // console.log(column);
-            this.props.onSort(column, sortDir);
+            this.props.onSort(column);
         }.bind(this);
     },
 
@@ -120,9 +114,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 });
 
 var TableCaption = React.createClass({displayName: "TableCaption",
-
     render: function () {
-
         return (
             React.createElement("caption", {role: "status", "aria-live": "assertive", "aria-relevant": "all", "aria-atomic": "true"}, this.props.caption)
         )
