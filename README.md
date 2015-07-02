@@ -3,6 +3,10 @@ A reusable React component for viewing tabular data with simple sorting.
 
 ##How to Use##
 
+First install dependencies with NPM
+
+    $ npm install
+
 You'll need to have a simple web server running. If you're on a Mac with Python, `cd` to this directory and run:
 
     python -m SimpleHTTPServer
@@ -10,6 +14,10 @@ You'll need to have a simple web server running. If you're on a Mac with Python,
 Then open your favorite browser and go to:
 
     http://localhost:8000/
+
+To compile JSX to JS durring development
+
+    $ npm run watch
 
 The component takes an input of JSON formatted data file:
 
