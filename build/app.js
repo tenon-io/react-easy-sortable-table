@@ -40,13 +40,13 @@ var TableComponent = React.createClass({displayName: "TableComponent",
     },
 
     sort: function (column) {
-        var sortDir = this.state.sortDir;
         var data = this.state.data;
-        var sortedData = this.sortByColumn(data, column, sortDir[column]);
-        this.setState({data: sortedData});
-        sortDir[column] = (sortDir[column] === 'asc' ? 'dsc' : 'asc');
-        this.setState({sortDir: sortDir});
-        this.props.caption += ' Sorted By ' + ' ' + column + ' ' + sortDir;
+        var sortedData = this.sortByColumn(data, column, this.state.sortDir);
+        this.setState({
+            data: sortedData,
+            sortDir: (this.state.sortDir === 'asc' ? 'dsc' : 'asc')
+        });
+        this.props.caption = ' Sorted By ' + ' ' + column + ' ' + this.state.sortDir;
     },
 
     render: function () {
@@ -58,7 +58,7 @@ var TableComponent = React.createClass({displayName: "TableComponent",
                 React.createElement("table", null, 
                     React.createElement(TableCaption, {caption: this.props.caption, onSort: this.sort}), 
                     React.createElement("thead", null, 
-                        React.createElement(TableHeader, {onSort: this.sort, columns: columns})
+                        React.createElement(TableHeader, {onSort: this.sort, sortDir: this.state.sortDir, columns: columns})
                     ), 
                     React.createElement(TableBody, {data: data, columns: columns})
                 )
@@ -73,6 +73,12 @@ var TableComponent = React.createClass({displayName: "TableComponent",
 
 
 var TableHeader = React.createClass({displayName: "TableHeader",
+
+    propTypes: {
+        sortDir: React.PropTypes.oneOf(['acs', 'dsc']),
+        onSort: React.PropTypes.func
+    },
+
     sort: function (column) {
         return function (event) {
 
@@ -93,7 +99,7 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 
             var sortDir = this.props.sortDir;
             console.log(sortDir);
-            console.log(column);
+            // console.log(column);
             this.props.onSort(column, sortDir);
         }.bind(this);
     },
